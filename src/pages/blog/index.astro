@@ -1,0 +1,48 @@
+---
+import { getCollection } from "astro:content";
+import WithHeaderLayout from "~/layouts/with-header.astro";
+import { dateFormatter } from "~/utils/formatter";
+import og from "~/assets/blog-og.webp";
+
+const allBlogs = await getCollection("blog");
+
+const blogs = allBlogs.sort(
+  (a, b) =>
+    new Date(b.data.pubDate).getTime() - new Date(a.data.pubDate).getTime(),
+);
+
+const ogImage = new URL(og.src, Astro.site).toString();
+---
+
+<WithHeaderLayout
+  title="Blog | Paras Solanki"
+  description="Some of my blogs"
+  image={ogImage}
+>
+  <main class="mx-auto max-w-4xl space-y-12 px-4 py-8">
+    <section class="space-y-8">
+      <h1 class="text-4xl font-black md:text-5xl">Blogs</h1>
+
+      <p class="text-muted">Some of my blogs.</p>
+
+      <div class="space-y-4">
+        {
+          blogs.map((blog) => (
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between">
+              <a
+                href={`/blog/${blog.slug}`}
+                transition:name={`/blog/${blog.slug}`}
+                class="hover:text-primary focus:text-primary text-lg font-medium transition-colors outline-none"
+              >
+                {blog.data.title}
+              </a>
+              <p class="text-sm text-zinc-500 sm:whitespace-pre">
+                {dateFormatter.format(blog.data.pubDate)}
+              </p>
+            </div>
+          ))
+        }
+      </div>
+    </section>
+  </main>
+</WithHeaderLayout>

@@ -1,0 +1,84 @@
+---
+import { projects } from "~/data";
+import WithHeaderLayout from "~/layouts/with-header.astro";
+import { Icon } from "astro-icon/components";
+
+import og from "~/assets/projects-og.webp";
+
+const ogImage = new URL(og.src, Astro.site).toString();
+---
+
+<WithHeaderLayout
+  title="Projects | Paras Solanki"
+  description="Some of the projects i have worked on."
+  image={ogImage}
+>
+  <main class="mx-auto max-w-4xl space-y-12 px-4 py-8">
+    <section class="space-y-8">
+      <h1 class="text-4xl font-black md:text-5xl">Projects</h1>
+
+      <p class="text-muted">Some of the projects i have worked on.</p>
+
+      {
+        projects.map((p) => (
+          <div class="border-muted/70 group/card hover:border-primary space-y-4 rounded-lg border-2 border-dashed p-6 transition-colors">
+            <div class="flex items-start justify-between">
+              <div class="space-y-2">
+                <h2 class="group-hover/card:text-primary text-2xl font-bold transition-colors">
+                  {p.name}
+                </h2>
+
+                <p class="text-sm text-zinc-500 uppercase">{p.tag}</p>
+              </div>
+
+              <div class="flex gap-4">
+                <a
+                  href={p.repo}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  title="Github Repository"
+                  class="inline-flex items-center opacity-80 outline-none hover:opacity-100 focus:opacity-100"
+                >
+                  <Icon
+                    name="github"
+                    class="ml-0.5 size-5"
+                    aria-hidden="true"
+                  />
+                </a>
+
+                {p.url && (
+                  <a
+                    href={p.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    title="Live URL"
+                    class="group inline-flex items-center opacity-80 outline-none hover:opacity-100 focus:opacity-100"
+                  >
+                    <Icon
+                      name="link"
+                      class="ml-0.5 size-5"
+                      aria-hidden="true"
+                    />
+                  </a>
+                )}
+              </div>
+            </div>
+
+            <p class="light:text-zinc-700 text-zinc-300">{p.description}</p>
+
+            <div class="space-y-2">
+              <h3 class="text-base font-semibold">Technologies</h3>
+              <div class="flex flex-wrap gap-2">
+                {p.techonologies.map((t) => (
+                  <div class="light:bg-zinc-200 rounded-md bg-zinc-800 px-2 py-1 text-xs">
+                    <p class="text-muted">{t}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        ))
+      }
+    </section>
+  </main>
+</WithHeaderLayout>

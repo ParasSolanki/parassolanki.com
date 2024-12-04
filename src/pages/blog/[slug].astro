@@ -1,0 +1,124 @@
+---
+import { getEntry, getCollection } from "astro:content";
+import WithHeaderLayout from "~/layouts/with-header.astro";
+import { Icon } from "astro-icon/components";
+
+import { dateFormatter } from "~/utils/formatter";
+
+import "~/styles/doc.css";
+
+const { slug } = Astro.params;
+
+export const prerender = true;
+
+export async function getStaticPaths() {
+  const blogs = await getCollection("blog");
+
+  return blogs.map((blog) => ({
+    params: { slug: blog.slug },
+  }));
+}
+
+const blog = await getEntry("blog", slug);
+
+if (!blog) {
+  return notFound();
+}
+
+const { Content, remarkPluginFrontmatter: frontmatter } = await blog.render();
+
+const readingTime = frontmatter.readingTime as number[];
+
+const publishedDate = dateFormatter.format(blog.data.pubDate);
+
+const readingTimeInMinutes = readingTime
+  .map((t) => Math.ceil(t))
+  .reduce((acc, time) => {
+    if (!acc.includes(time.toString())) {
+      acc += acc ? `-${time.toString()}` : time.toString();
+    }
+    return acc;
+  }, "");
+
+const ogImage = blog.data.ogImage?.src
+  ? new URL(blog.data.ogImage.src, Astro.site).toString()
+  : undefined;
+---
+
+<WithHeaderLayout
+  title={blog.data.title}
+  description={blog.data.description}
+  image={ogImage}
+>
+  <main class="mx-auto max-w-4xl space-y-12 px-4 py-8">
+    <article>
+      <header>
+        <h1
+          class="text-3xl font-black md:text-4xl"
+          transition:name={`/blog/${slug}`}
+        >
+          {blog.data.title}
+        </h1>
+        <div class="mt-6 flex flex-wrap justify-between">
+          <div>
+            <p class="inline-flex items-center leading-normal">
+              <Icon
+                name="calendar"
+                aria-hidden
+                class="mr-2 size-4.5 flex-shrink-0"
+              />
+              <span
+                >Published on: <strong><time>{publishedDate}</time></strong>
+              </span>
+            </p>
+          </div>
+          <div>
+            <p class="inline-flex items-center leading-normal">
+              <Icon
+                name="clock"
+                aria-hidden
+                class="mr-2 size-4.5 flex-shrink-0"
+              />
+              <span><time>{readingTimeInMinutes} minute </time> read</span>
+            </p>
+          </div>
+        </div>
+      </header>
+      <article class="light:prose prose-invert prose doc mt-8 min-w-full">
+        <Content />
+      </article>
+    </article>
+  </main>
+
+  <script data-astro-rerun is:inline>
+    Array.from(
+      document.querySelectorAll(
+        "article.doc div.code__container div.code__code button.code__copy",
+      ),
+    ).forEach((button) => {
+      if (!button) return;
+
+      button.addEventListener("click", () => {
+        const value = button.getAttribute("data-value");
+
+        if (!value) return;
+
+        if (!window.navigator.clipboard) return;
+
+        window.navigator.clipboard
+          .writeText(value)
+          .then(() => {
+            button.setAttribute("data-status", "copied");
+          })
+          .catch(() => {
+            button.setAttribute("data-status", "error");
+          })
+          .finally(() => {
+            setTimeout(() => {
+              button.removeAttribute("data-status");
+            }, 1000);
+          });
+      });
+    });
+  </script>
+</WithHeaderLayout>

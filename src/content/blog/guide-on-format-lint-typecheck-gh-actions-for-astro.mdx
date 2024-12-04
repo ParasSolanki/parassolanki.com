@@ -1,0 +1,435 @@
+---
+title: "Guide On Format, Lint And Typecheck Github Actions For Astro"
+description: "Guide on how to setting up format checking, linting, and type checking using Prettier, ESLint, pnpm and GitHub Actions for your Astro project."
+pubDate: "2024-11-30"
+ogImage: "../../assets/guide-on-format-lint-typecheck-gh-actions-for-astro-og.webp"
+---
+
+If you have an [Astro](https://astro.build) project setup with [Prettier](https://prettier.io), [ESLint](https://eslint.org) and [Typescript](https://www.typescriptlang.org) and wanted to run a Github Action which checks for formatting, linting and typechecking, here's guide which will help you in setup.
+
+## Getting Started
+
+In this guide we are using [pnpm](https://pnpm.io) as package manager. You can replace it with npm or yarn if you want.
+
+## What is Github Action?
+
+Github action are basically workflows which you can run in your repository. We can use existing workflows or create a custom one based on our project. Check out their docs for full guide [https://docs.github.com/en/actions](https://docs.github.com/en/actions)
+
+
+## Setup Prettier
+
+If you don't have Prettier and  installed in your project install it with by running the following command:
+
+```shell
+pnpm add -D prettier
+```
+
+To format `.astro` files install Astro official prettier plugin [prettier-plugin-astro](https://github.com/withastro/prettier-plugin-astro).
+
+
+```shell
+pnpm add -D prettier-plugin-astro
+```
+
+Now, create a `prettier.config.cjs` config file in root of your project and add the following content:
+
+```js filename=prettier.config.cjs
+/**
+ * @type {import('prettier').Config}
+ */
+const config = {
+  arrowParens: "always",
+  printWidth: 80,
+  singleQuote: false,
+  jsxSingleQuote: false,
+  semi: true,
+  trailingComma: "all",
+  tabWidth: 2,
+  plugins: [
+    "prettier-plugin-astro",
+  ],
+  overrides: [
+    {
+      files: "*.astro",
+      options: {
+        parser: "astro",
+      },
+    },
+  ],
+};
+
+module.exports = config;
+```
+
+You can modify the config based on your project requirements.
+
+Add two format script command in your `package.json` to format and check formatting:
+
+```json filename=package.json
+{
+  "scripts": {
+    "format": "prettier '**/*.{cjs,mjs,ts,tsx,md,mdx,json,astro}' --ignore-path ./.gitignore --ignore-unknown --write",
+    "format:check": "prettier '**/*.{cjs,mjs,ts,tsx,md,mdx,json,astro}' --ignore-path ./.gitignore --ignore-unknown --check"
+  }
+}
+```
+
+Here, `format` script will format all the files in the project and `format:check` will check if the files are formatted correctly. Also we have set ignore path to `./.gitignore` means those will be ignored.
+
+### Creating Format Github Action
+
+Now, let's create a Github Action to run the format check.
+
+```yaml filename=.github/workflows/format-ci.yml
+name: Format CI
+
+on:
+  pull_request:
+    branches: ["*"]
+  merge_group:
+
+jobs:
+  prettier:
+    runs-on: ubuntu-latest
+    name: Run prettier
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - uses: pnpm/action-setup@v3
+        name: Install pnpm
+        id: pnpm-install
+        with:
+          run_install: false
+
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        run: |
+          echo "pnpm_cache_dir=$(pnpm store path)" >> $GITHUB_OUTPUT
+
+      - uses: actions/cache@v4
+        name: Setup pnpm cache
+        with:
+          path: ${{ steps.pnpm-cache.outputs.pnpm_cache_dir }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - run: pnpm format:check 
+```
+
+Workflow steps:
+
+1. Checkout the repository code
+2. Install Node.js
+3. Install pnpm
+4. Set up pnpm cache to speed up dependency installation
+5. Install project dependencies using pnpm
+6. Run `pnpm format:check` to verify code formatting
+
+We are caching the installed dependencies with [actions/cache](https://github.com/actions/cache) which will make it run faster on subsequent runs.
+
+> Note: for npm and yarn you have to cache their lock file `package-lock.json` or `yarn.lock`.
+
+Similarly, Let's setup ESLint.
+
+## Setup ESLint
+
+Install ESLint in your project with by running the following command:
+
+```shell
+pnpm add -D eslint
+```
+
+I recommend using [eslint-plugin-astro](https://github.com/ota-meshi/eslint-plugin-astro) for Astro components. Also since we are using typescript we will install `@typescript-eslint/parser` too.
+
+```shell
+pnpm add -D eslint-plugin-astro @typescript-eslint/parser
+```
+
+Create a `eslint.config.cjs` config file in root of your project and add the following content:
+
+```js filename=eslint.config.cjs
+import eslintPluginAstro from 'eslint-plugin-astro';
+import tsParser from '@typescript-eslint/parser';
+
+export default [
+  ...eslintPluginAstro.configs.recommended,
+  {
+    files: ['**/*.astro', '**/*.ts', '**/*.tsx'],
+    languageOptions: {
+      parser: tsParser,
+    },
+    rules: {
+      // Add more specific rules
+     
+    }
+  }
+];
+```
+Modify the config based on your project requirements.
+
+Add two lint script command in your `package.json` to lint and check linting:
+
+```json filename=package.json
+{
+  "scripts": {
+    "lint:fix": "pnpm lint --fix",
+    "lint": "eslint . --report-unused-disable-directives"
+  }
+}
+```
+Here, `lint` script will check for lint errors and `lint:fix` to fix lint errors.
+
+### Creating Lint Github Action
+
+Now, let's create a Github Action to run the lint check.
+
+```yaml filename=.github/workflows/lint-ci.yml
+name: Lint CI
+
+on:
+  pull_request:
+    branches: ["*"]
+  merge_group:
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    name: Run ESLint
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - uses: pnpm/action-setup@v3
+        name: Install pnpm
+        id: pnpm-install
+        with:
+          run_install: false
+
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        run: |
+          echo "pnpm_cache_dir=$(pnpm store path)" >> $GITHUB_OUTPUT
+
+      - uses: actions/cache@v4
+        name: Setup pnpm cache
+        with:
+          path: ${{ steps.pnpm-cache.outputs.pnpm_cache_dir }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - run: pnpm lint
+```
+
+Now, Let's create TypeCheck Github Action.
+
+## Creating TypeCheck Github Action
+
+TypeCheck Github Action is pretty simple we don't need to install any other packages cause astro does already have `astro check` command which we can use to do typechecking.
+
+Add `typecheck` script command in your `package.json` to do typechecking:
+
+```json filename=package.json
+{
+  "scripts": {
+    "typecheck": "astro check"
+  }
+}
+```
+
+Create `typecheck-ci.yml` file and add the following content:
+
+```yml filename=.gitub/workflows/typecheck-ci.yml
+name: Typecheck CI
+
+on:
+  pull_request:
+    branches: ["*"]
+  merge_group:
+
+jobs:
+  prettier:
+    runs-on: ubuntu-latest
+    name: Run prettier
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - uses: pnpm/action-setup@v3
+        name: Install pnpm
+        id: pnpm-install
+        with:
+          run_install: false
+
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        run: |
+          echo "pnpm_cache_dir=$(pnpm store path)" >> $GITHUB_OUTPUT
+
+      - uses: actions/cache@v4
+        name: Setup pnpm cache
+        with:
+          path: ${{ steps.pnpm-cache.outputs.pnpm_cache_dir }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - run: pnpm typecheck
+```
+
+If you don't want to create a separate `yml` workflow file for each separately you can create one `ci.yml` that does the same.
+
+```yml filename=".github/workflows/ci.yml"
+name: CI
+
+on:
+  pull_request:
+    branches: ["*"]
+  merge_group:
+
+jobs:
+  prettier:
+    runs-on: ubuntu-latest
+    name: Run prettier
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - uses: pnpm/action-setup@v3
+        name: Install pnpm
+        id: pnpm-install
+        with:
+          run_install: false
+
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        run: |
+          echo "pnpm_cache_dir=$(pnpm store path)" >> $GITHUB_OUTPUT
+
+      - uses: actions/cache@v4
+        name: Setup pnpm cache
+        with:
+          path: ${{ steps.pnpm-cache.outputs.pnpm_cache_dir }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - run: pnpm format:check
+
+  lint:
+    runs-on: ubuntu-latest
+    name: Run ESLint
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - uses: pnpm/action-setup@v3
+        name: Install pnpm
+        id: pnpm-install
+        with:
+          run_install: false
+
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        run: |
+          echo "pnpm_cache_dir=$(pnpm store path)" >> $GITHUB_OUTPUT
+
+      - uses: actions/cache@v4
+        name: Setup pnpm cache
+        with:
+          path: ${{ steps.pnpm-cache.outputs.pnpm_cache_dir }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - run: pnpm lint
+
+  typecheck:
+    runs-on: ubuntu-latest
+    name: Run Typecheck
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - uses: pnpm/action-setup@v3
+        name: Install pnpm
+        id: pnpm-install
+        with:
+          run_install: false
+
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        run: |
+          echo "pnpm_cache_dir=$(pnpm store path)" >> $GITHUB_OUTPUT
+
+      - uses: actions/cache@v4
+        name: Setup pnpm cache
+        with:
+          path: ${{ steps.pnpm-cache.outputs.pnpm_cache_dir }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - run: pnpm typecheck
+```
+
+Now, whenever a new pull request is created in your github repository it will run this workflows.
+
+Thank you for reading this and I hope you liked it!
+

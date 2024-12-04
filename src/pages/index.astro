@@ -1,0 +1,197 @@
+---
+import { getCollection } from "astro:content";
+import { Icon } from "astro-icon/components";
+
+import { projects, work, SITE_DESCRIPTION, SITE_TITLE } from "~/data";
+import { dateFormatter } from "~/utils/formatter";
+
+import WithHeaderLayout from "~/layouts/with-header.astro";
+
+const blogs = await getCollection("blog");
+
+const [blog1, blog2] = blogs.sort(
+  (a, b) =>
+    new Date(b.data.pubDate).getTime() - new Date(a.data.pubDate).getTime(),
+);
+---
+
+<WithHeaderLayout title={SITE_TITLE} description={SITE_DESCRIPTION}>
+  <main class="mx-auto max-w-4xl space-y-12 px-4 py-8">
+    <section class="space-y-8">
+      <h1 class="text-4xl font-black md:text-5xl">Paras Solanki</h1>
+      <p class="light:text-zinc-700 text-lg text-zinc-300">
+        I'm a developer with a passion for building and problem solving. I enjoy
+        coding. Always eager to learn about new things. Love playing cricket and
+        watching movies.
+      </p>
+    </section>
+
+    <section class="space-y-8">
+      <h2 class="text-3xl font-bold">Work</h2>
+
+      <div class="space-y-10">
+        {
+          work.map((w) => (
+            <div class="space-y-2">
+              <h3 class="text-2xl font-medium">{w.name}</h3>
+              <p class="text-sm text-zinc-500 uppercase">
+                {w.position} ({w.startDate} - {w.endDate})
+              </p>
+              <p class="light:text-zinc-700 text-zinc-300">
+                {w.description.join(" ")}
+              </p>
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    <section class="space-y-8">
+      <h2 class="text-3xl font-bold">Projects</h2>
+      <div class="space-y-10">
+        {
+          projects.map((p) => (
+            <div class="space-y-2">
+              <a
+                href={p.url ?? p.repo}
+                class="hover:text-primary focus:text-primary text-2xl font-medium transition-colors outline-none"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {p.name}
+              </a>
+              <p class="text-sm text-zinc-500 uppercase">{p.tag}</p>
+
+              <p class="light:text-zinc-700 text-zinc-300">{p.description}</p>
+            </div>
+          ))
+        }
+      </div>
+      <a
+        href="/projects"
+        class="text-primary hover:text-primary focus:text-primary tracking-widest underline-offset-2 transition-colors outline-none hover:underline focus:underline"
+        >all projects</a
+      >
+    </section>
+
+    <section class="space-y-8">
+      <h2 class="text-3xl font-bold">Blogs</h2>
+      <div class="space-y-4">
+        <div
+          class="flex flex-col sm:flex-row sm:items-center sm:justify-between"
+        >
+          <a
+            href={`/blog/${blog1.slug}`}
+            transition:name={`/blog/${blog1.slug}`}
+            class="hover:text-primary focus:text-primary text-lg font-medium transition-colors outline-none"
+          >
+            {blog1.data.title}
+          </a>
+          <p class="text-sm text-zinc-500 sm:whitespace-pre">
+            {dateFormatter.format(blog1.data.pubDate)}
+          </p>
+        </div>
+
+        {
+          blog2 && (
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between">
+              <a
+                href={`/blog/${blog2.slug}`}
+                transition:name={`/blog/${blog2.slug}`}
+                class="hover:text-primary focus:text-primary text-lg font-medium transition-colors outline-none"
+              >
+                {blog2.data.title}
+              </a>
+              <p class="text-sm text-zinc-500 sm:whitespace-pre">
+                {dateFormatter.format(blog2.data.pubDate)}
+              </p>
+            </div>
+          )
+        }
+      </div>
+      <a
+        href="/blog"
+        class="text-primary hover:text-primary focus:text-primary tracking-widest underline-offset-2 transition-colors outline-none hover:underline focus:underline"
+        >all blogs</a
+      >
+    </section>
+  </main>
+
+  <footer class="mx-auto max-w-4xl px-4 py-6">
+    <h3 class="text-3xl font-bold">Links</h3>
+    <nav class="mt-6 flex flex-wrap gap-6 uppercase">
+      <a
+        href="mailto:parassolanki151@gmail.com"
+        target="_self"
+        class="hover:text-primary focus:text-primary tracking-widest underline-offset-2 transition-colors outline-none hover:underline focus:underline"
+        >Email</a
+      >
+      <a
+        href="https://github.com/ParasSolanki"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="group hover:text-primary focus:text-primary inline-flex items-center tracking-widest underline-offset-2 transition-colors outline-none hover:underline focus:underline"
+        >Github <Icon
+          name="arrow-up-right"
+          class="ml-0.5 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-focus:-translate-y-0.5 group-focus:translate-x-0.5"
+          aria-hidden="true"
+        /></a
+      >
+      <a
+        href="https://x.com/_parasSolanki"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="group hover:text-primary focus:text-primary inline-flex items-center tracking-widest underline-offset-2 transition-colors outline-none hover:underline focus:underline"
+        >X <Icon
+          name="arrow-up-right"
+          class="ml-0.5 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-focus:-translate-y-0.5 group-focus:translate-x-0.5"
+          aria-hidden="true"
+        /></a
+      >
+      <a
+        href="https://bsky.app/profile/parassolanki.bsky.social"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="group hover:text-primary focus:text-primary inline-flex items-center tracking-widest underline-offset-2 transition-colors outline-none hover:underline focus:underline"
+        >BlueSky <Icon
+          name="arrow-up-right"
+          class="ml-0.5 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-focus:-translate-y-0.5 group-focus:translate-x-0.5"
+          aria-hidden="true"
+        /></a
+      >
+      <a
+        href="https://www.linkedin.com/in/paras-solanki-a5410b1b3"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="group hover:text-primary focus:text-primary inline-flex items-center tracking-widest underline-offset-2 transition-colors outline-none hover:underline focus:underline"
+        >LinkedIn <Icon
+          name="arrow-up-right"
+          class="ml-0.5 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-focus:-translate-y-0.5 group-focus:translate-x-0.5"
+          aria-hidden="true"
+        /></a
+      >
+      <a
+        href="/rss.xml"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="group hover:text-primary focus:text-primary inline-flex items-center tracking-widest underline-offset-2 transition-colors outline-none hover:underline focus:underline"
+        >RSS <Icon
+          name="arrow-up-right"
+          class="ml-0.5 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-focus:-translate-y-0.5 group-focus:translate-x-0.5"
+          aria-hidden="true"
+        /></a
+      >
+      <a
+        href="https://github.com/ParasSolanki/parassolanki.com"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="group hover:text-primary focus:text-primary inline-flex items-center tracking-widest underline-offset-2 transition-colors outline-none hover:underline focus:underline"
+        >Source <Icon
+          name="arrow-up-right"
+          class="ml-0.5 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-focus:-translate-y-0.5 group-focus:translate-x-0.5"
+          aria-hidden="true"
+        /></a
+      >
+    </nav>
+  </footer>
+</WithHeaderLayout>

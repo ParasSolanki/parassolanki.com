@@ -1,0 +1,267 @@
+article.doc {
+  --mix-color: #9f9f9f;
+  --code-line-highlight-color: #8e96aa24;
+
+  --code-diff-space: 32px;
+  --code-diff-width: 48px;
+
+  --code-line-diff-remove-color: #cb102f24;
+  --code-line-diff-remove-symbol-color: #ce2026;
+
+  --code-line-diff-add-color: #10b98124;
+  --code-line-diff-add-symbol-color: #18794e;
+}
+
+article.doc .code__container {
+  position: relative;
+  margin-top: var(--spacing-v, 1.7142857em);
+  margin-bottom: var(--spacing-v, 1.7142857em);
+}
+
+article.doc .code__container .code__header {
+  display: flex;
+  align-items: stretch;
+  background-color: var(--bg);
+  color: var(--color);
+  border-top-right-radius: var(--radius, 0);
+  border-top-left-radius: var(--radius, 0);
+}
+
+article.doc .code__container .code__header .code__filename {
+  margin: 0;
+  flex-shrink: 0;
+  padding: calc(var(--padding-v, 0.8571429em) / 1.5)
+    calc(var(--padding-h, 1.1428571em) / 1.5);
+  border-bottom: 1px solid var(--color-primary);
+  color: var(--color-primary);
+  font-size: var(--text-sm);
+  line-height: var(--text-sm--line-height);
+}
+
+article.doc .code__container .code__header .code__space {
+  flex-grow: 1;
+  display: flex;
+  justify-content: flex-end;
+  border-right: none;
+  border-width: 1px;
+  border-style: solid;
+  border-color: color-mix(in oklab, var(--bg) 70%, var(--mix-color));
+  background-color: color-mix(in oklab, var(--bg) 80%, var(--mix-color));
+  border-top-right-radius: var(--radius, 0);
+}
+
+article.doc .code__container .code__code {
+  position: relative;
+}
+
+article.doc .code__container .code__copy {
+  --mix-color: #9f9f9f;
+  width: 2.1rem;
+  height: 2.1rem;
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 0.4rem;
+  margin-top: calc(var(--padding-v, 0.8571429em) / 2);
+  margin-right: calc(var(--padding-v, 0.8571429em) / 2);
+  border-width: 1px;
+  border-style: solid;
+  border-color: color-mix(in oklab, var(--bg) 55%, var(--mix-color));
+  color: color-mix(in oklab, var(--bg) 40%, var(--mix-color));
+  border-radius: var(--radius, 0);
+  opacity: 0;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  transition-property: opacity, border-color, color;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 200ms;
+}
+
+article.doc .code__container .code__copy::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  font-size: var(--text-sm);
+  line-height: var(--text-sm--line-height);
+  background-color: var(--color-primary);
+  color: var(--color-foreground);
+  padding: 0.25rem 0.5rem;
+  border-radius: var(--radius, 0);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-90%);
+
+  transition-property: opacity, transform, color;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 200ms;
+}
+
+article.doc .code__container .code__copy[data-status="copied"]::before {
+  content: "Copied";
+  opacity: 1;
+  transform: translateY(-120%);
+}
+
+article.doc .code__container .code__code:hover > pre.astro-code::after {
+  opacity: 0;
+}
+
+article.doc .code__container .code__code:hover .code__copy {
+  pointer-events: all;
+  opacity: 0.8;
+}
+
+article.doc .code__container .code__copy:hover {
+  opacity: 1;
+}
+
+article.doc .code__container .code__code pre.astro-code::after {
+  position: absolute;
+  top: 0;
+  right: 0;
+  content: attr(data-language);
+  padding: calc(var(--padding-v, 0.8571429em) / 2)
+    calc(var(--padding-h, 1.1428571em) / 2);
+  font-size: var(--font-size);
+  line-height: var(--line-height);
+  opacity: 0.6;
+  transition-property: opacity;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+article.doc pre.astro-code {
+  position: relative;
+}
+
+article.doc .code__container .code__header + .code__code > pre.astro-code {
+  border-top-right-radius: 0;
+  border-top-left-radius: 0;
+}
+
+article.doc .code__container .code__code pre.astro-code {
+  margin: 0;
+}
+
+article.doc.prose code:not(pre code) {
+  border-radius: 0.25rem;
+
+  padding: 0.125em 0.25em;
+  color: var(--color-background);
+  background-color: color-mix(
+    in oklab,
+    var(--color-muted) 40%,
+    var(--mix-color)
+  );
+}
+article.doc.prose code:not(pre code)::after,
+article.doc.prose code:not(pre code)::before {
+  content: none;
+}
+
+article.doc .astro-code code span.highlighted {
+  background-color: var(--code-line-highlight-color) !important;
+  transition: background-color 0.5s;
+  margin: 0 calc(var(--code-diff-space) * -1);
+  padding: 0 var(--code-diff-space);
+  width: calc(100% + var(--code-diff-width));
+  display: inline-block;
+}
+
+article.doc .astro-code code .diff {
+  transition: background-color 0.5s;
+  margin: 0 calc(var(--code-diff-space) * -1);
+  padding: 0 var(--code-diff-space);
+  width: calc(100% + var(--code-diff-width));
+  display: inline-block;
+}
+
+article.doc .astro-code code .diff::before {
+  position: absolute;
+  left: 6px;
+}
+
+article.doc .astro-code code .diff.remove {
+  background-color: var(--code-line-diff-remove-color);
+  opacity: 0.7;
+}
+article.doc .astro-code code .diff.remove::before {
+  content: "-";
+  color: var(--code-line-diff-remove-symbol-color);
+}
+
+article.doc .astro-code code .diff.add {
+  background-color: var(--code-line-diff-add-color);
+}
+
+article.doc .astro-code code .diff.add::before {
+  content: "+";
+  color: var(--code-line-diff-add-symbol-color);
+}
+
+article.doc .heading__anchor {
+  position: relative;
+  line-height: normal;
+  text-decoration: none;
+  transition: text-decoration 0.25s;
+}
+
+article.doc .heading__anchor:hover,
+article.doc .heading__anchor:focus {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+article.doc .heading__anchor::before {
+  content: "#";
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin-left: -0.87em;
+  line-height: inherit;
+  font-weight: 500;
+  -webkit-user-select: none;
+  user-select: none;
+  opacity: 0;
+  text-decoration: none;
+  transition:
+    color 0.25s,
+    opacity 0.25s;
+}
+
+article.doc .heading__anchor:hover::before,
+article.doc .heading__anchor:focus::before {
+  opacity: 1;
+}
+
+/* Dark theme */
+html.dark article.doc {
+  --code-line-highlight-color: #65758629;
+}
+
+html.dark article.doc .code__container .code__header {
+  background-color: var(--dark-bg);
+  color: var(--dark-color);
+}
+
+html.dark article.doc .code__container .code__header .code__space {
+  border-color: color-mix(in oklab, var(--dark-bg) 70%, var(--mix-color));
+  background-color: color-mix(in oklab, var(--dark-bg) 80%, var(--mix-color));
+}
+
+html.dark article.doc .code__container .code__copy {
+  border-color: color-mix(in oklab, var(--dark-bg) 55%, var(--mix-color));
+  color: color-mix(in oklab, var(--dark-bg) 40%, var(--mix-color));
+}
+
+html.dark article.doc pre.astro-code {
+  color: var(--shiki-dark) !important;
+  background-color: var(--shiki-dark-bg) !important ;
+}
+
+html.dark article.doc .astro-code span {
+  color: var(--shiki-dark) !important;
+}

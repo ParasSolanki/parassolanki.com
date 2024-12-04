@@ -1,0 +1,133 @@
+---
+import { Icon } from "astro-icon/components";
+---
+
+<button
+  id="theme-toggle"
+  type="button"
+  aria-label="Toggle to light mode"
+  title="Toggle to light mode"
+  class="group light:text-zinc-700 ring-offset-background focus:ring-offset rounded border-none bg-transparent text-zinc-300 ring-amber-600 ring-offset-2 outline-none focus:ring-2 focus:ring-amber-600"
+>
+  <Icon
+    name="moon"
+    class="size-6 group-not-[data-theme]:hidden group-data-[theme=dark]:block"
+  />
+  <Icon
+    name="sun"
+    class="size-6 group-not-[data-theme]:hidden group-data-[theme=light]:block"
+  />
+</button>
+
+<script data-astro-rerun is:inline>
+  var themeTransitionStyles = `
+    ::view-transition-group(root) {
+      animation-timing-function: var(--expo-out);
+    }
+
+    ::view-transition-new(root) {
+      mask: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40"><defs><filter id="blur"><feGaussianBlur stdDeviation="2"/></filter></defs><circle cx="20" cy="20" r="18" fill="white" filter="url(%23blur)"/></svg>')
+        center / 0 no-repeat;
+      animation: scale 1s;
+    }
+
+    ::view-transition-old(root),
+    .dark::view-transition-old(root) {
+      animation: none;
+      z-index: -1;
+    }
+    .dark::view-transition-new(root) {
+      animation: scale 1s;
+    }
+
+    @keyframes scale {
+      to {
+        mask-size: 200vmax;
+      }
+    }
+  `;
+  var buttonEl = document.getElementById("theme-toggle");
+  var themeTransitionStyleEl;
+
+  function createThemeTransitionStyle() {
+    themeTransitionStyleEl = document.head.querySelector(
+      'style[data-name="theme-transition"]',
+    );
+    if (!themeTransitionStyleEl) {
+      themeTransitionStyleEl = document.createElement("style");
+      themeTransitionStyleEl.setAttribute("type", "text/css");
+      themeTransitionStyleEl.setAttribute("data-name", "theme-transition");
+      document.head.appendChild(themeTransitionStyleEl);
+    }
+  }
+
+  if (buttonEl) {
+    const theme = localStorage.getItem("theme") ?? "dark";
+
+    buttonEl.setAttribute("data-theme", theme === "light" ? "light" : "dark");
+
+    buttonEl.addEventListener("click", () => {
+      const currentTheme = buttonEl.getAttribute("data-theme");
+      const targetTheme = currentTheme === "dark" ? "light" : "dark";
+
+      localStorage.setItem("theme", targetTheme);
+
+      buttonEl.setAttribute("data-theme", targetTheme);
+      buttonEl.setAttribute("title", `Toggle to ${currentTheme} mode`);
+      buttonEl.setAttribute("aria-label", `Toggle to ${currentTheme} mode`);
+
+      const shouldTransition =
+        document.startViewTransition &&
+        !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+      function updateTheme(targetTheme) {
+        updateMetaTags(targetTheme);
+
+        document.documentElement.classList.add("no-transitions");
+
+        document.documentElement.classList.remove("light", "dark");
+
+        document.documentElement.classList.add(targetTheme);
+
+        setTimeout(() => {
+          document.documentElement.classList.remove("no-transitions");
+        });
+      }
+
+      if (shouldTransition) {
+        createThemeTransitionStyle();
+        document.startViewTransition(() => {
+          if (!themeTransitionStyleEl.textContent) {
+            themeTransitionStyleEl.textContent = themeTransitionStyles;
+          }
+
+          updateTheme(targetTheme);
+        });
+      } else {
+        updateTheme(targetTheme);
+      }
+    });
+
+    window.addEventListener("storage", (event) => {
+      if (event.key !== "theme") return;
+      if (!event.storageArea) return;
+      if (event.newValue !== "light" && event.newValue !== "dark") return;
+
+      const newTheme = event.newValue;
+      const prevTheme = newTheme === "dark" ? "light" : "dark";
+
+      document.documentElement.classList.remove("light", "dark");
+      document.documentElement.classList.add(newTheme);
+
+      buttonEl.setAttribute("data-theme", newTheme);
+      buttonEl.setAttribute("title", `Toggle to ${prevTheme} mode`);
+      buttonEl.setAttribute("aria-label", `Toggle to ${prevTheme} mode`);
+
+      updateMetaTags(newTheme);
+    });
+
+    document.addEventListener("astro:after-swap", () => {
+      createThemeTransitionStyle();
+    });
+  }
+</script>

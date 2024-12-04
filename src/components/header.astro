@@ -1,0 +1,27 @@
+---
+import ThemeToggle from "./theme-toggle.astro";
+---
+
+<header class="mx-auto max-w-4xl px-4 py-6 uppercase" transition:persist>
+  <div class="flex items-center justify-between">
+    <nav class="flex gap-6">
+      <a
+        href="/"
+        class="tracking-widest underline-offset-2 transition-colors outline-none hover:text-yellow-600 hover:underline focus:text-yellow-600 focus:underline"
+        >Home</a
+      >
+      <a
+        href="/blog"
+        class="tracking-widest underline-offset-2 transition-colors outline-none hover:text-yellow-600 hover:underline focus:text-yellow-600 focus:underline"
+        >Blogs</a
+      >
+      <a
+        href="/projects"
+        class="tracking-widest underline-offset-2 transition-colors outline-none hover:text-yellow-600 hover:underline focus:text-yellow-600 focus:underline"
+        >Projects</a
+      >
+    </nav>
+
+    <ThemeToggle />
+  </div>
+</header>

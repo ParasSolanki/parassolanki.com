@@ -1,0 +1,138 @@
+---
+import { ViewTransitions } from "astro:transitions";
+import { SITE_TITLE } from "~/data";
+
+import "~/styles/global.css";
+
+interface Props {
+  title: string;
+  description: string;
+  image?: string;
+}
+
+const { title, description, image } = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+
+    <link
+      rel="preload"
+      href="/fonts/GeistMonoVF.woff"
+      as="font"
+      type="font/woff"
+      crossorigin
+    />
+
+    <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="manifest" href="/site.webmanifest" color="#000000" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+
+    <script is:inline>
+      function updateMetaTags(theme) {
+        document.head
+          .querySelector("link[rel='icon'][type='image/x-icon']")
+          ?.setAttribute(
+            "href",
+            theme === "light" ? "/light-favicon.ico" : "/favicon.ico",
+          );
+        document.head
+          .querySelector("link[rel='apple-touch-icon'][sizes='180x180']")
+          ?.setAttribute(
+            "href",
+            theme === "light"
+              ? "/light-apple-touch-icon.png"
+              : "/apple-touch-icon.png",
+          );
+        document.head
+          .querySelector("link[rel='icon'][type='image/png'][sizes='16x16']")
+          ?.setAttribute(
+            "href",
+            theme === "light"
+              ? "/light-favicon-16x16.png"
+              : "/favicon-16x16.png",
+          );
+        document.head
+          .querySelector("link[rel='icon'][type='image/png'][sizes='32x32']")
+          ?.setAttribute(
+            "href",
+            theme === "light"
+              ? "/light-favicon-32x32.png"
+              : "/favicon-32x32.png",
+          );
+      }
+
+      function handle() {
+        if (localStorage.getItem("theme") === "light") {
+          document.documentElement.classList.add("light");
+          document.documentElement.classList.remove("dark");
+          updateMetaTags("light");
+        } else {
+          document.documentElement.classList.add("dark");
+          document.documentElement.classList.remove("light");
+          localStorage.setItem("theme", "dark");
+          updateMetaTags("dark");
+        }
+      }
+
+      handle();
+
+      document.addEventListener("astro:after-swap", () => {
+        handle();
+      });
+    </script>
+
+    <link rel="canonical" href={canonicalURL} />
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title={SITE_TITLE}
+      href={new URL("rss.xml", Astro.site)}
+    />
+
+    <title>{title}</title>
+    <meta name="title" content={title} />
+    <meta name="description" content={description} />
+
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:site_name" content="Paras Solanki" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={Astro.url} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={Astro.url} />
+    <meta property="twitter:title" content={title} />
+    <meta property="twitter:description" content={description} />
+
+    {
+      image && (
+        <>
+          <meta property="og:image" content={image} />
+          <meta property="twitter:image" content={image} />
+        </>
+      )
+    }
+
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="Website" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+
+    <ViewTransitions />
+  </head>
+  <body
+    class="bg-background text-foreground selection:bg-primary antialiased selection:text-white/90"
+  >
+    <slot />
+  </body>
+</html>
