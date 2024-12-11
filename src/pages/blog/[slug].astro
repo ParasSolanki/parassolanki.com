@@ -6,11 +6,8 @@ import { Icon } from "astro-icon/components";
 import { dateFormatter } from "~/utils/formatter";
 
 import "~/styles/doc.css";
-import { undefined } from "astro:schema";
 
 const { slug } = Astro.params;
-
-export const prerender = true;
 
 export async function getStaticPaths() {
   const blogs = await getCollection("blog");
