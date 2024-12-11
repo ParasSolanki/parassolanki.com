@@ -15,17 +15,15 @@ In this guide we are using [pnpm](https://pnpm.io) as package manager. You can r
 
 Github action are basically workflows which you can run in your repository. We can use existing workflows or create a custom one based on our project. Check out their docs for full guide [https://docs.github.com/en/actions](https://docs.github.com/en/actions)
 
-
 ## Setup Prettier
 
-If you don't have Prettier and  installed in your project install it with by running the following command:
+If you don't have Prettier and installed in your project install it with by running the following command:
 
 ```shell
 pnpm add -D prettier
 ```
 
 To format `.astro` files install Astro official prettier plugin [prettier-plugin-astro](https://github.com/withastro/prettier-plugin-astro).
-
 
 ```shell
 pnpm add -D prettier-plugin-astro
@@ -45,9 +43,7 @@ const config = {
   semi: true,
   trailingComma: "all",
   tabWidth: 2,
-  plugins: [
-    "prettier-plugin-astro",
-  ],
+  plugins: ["prettier-plugin-astro"],
   overrides: [
     {
       files: "*.astro",
@@ -124,7 +120,7 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      - run: pnpm format:check 
+      - run: pnpm format:check
 ```
 
 Workflow steps:
@@ -159,23 +155,23 @@ pnpm add -D eslint-plugin-astro @typescript-eslint/parser
 Create a `eslint.config.cjs` config file in root of your project and add the following content:
 
 ```js filename=eslint.config.cjs
-import eslintPluginAstro from 'eslint-plugin-astro';
-import tsParser from '@typescript-eslint/parser';
+import eslintPluginAstro from "eslint-plugin-astro";
+import tsParser from "@typescript-eslint/parser";
 
 export default [
   ...eslintPluginAstro.configs.recommended,
   {
-    files: ['**/*.astro', '**/*.ts', '**/*.tsx'],
+    files: ["**/*.astro", "**/*.ts", "**/*.tsx"],
     languageOptions: {
       parser: tsParser,
     },
     rules: {
       // Add more specific rules
-     
-    }
-  }
+    },
+  },
 ];
 ```
+
 Modify the config based on your project requirements.
 
 Add two lint script command in your `package.json` to lint and check linting:
@@ -188,6 +184,7 @@ Add two lint script command in your `package.json` to lint and check linting:
   }
 }
 ```
+
 Here, `lint` script will check for lint errors and `lint:fix` to fix lint errors.
 
 ### Creating Lint Github Action
@@ -432,4 +429,3 @@ jobs:
 Now, whenever a new pull request is created in your github repository it will run this workflows.
 
 Thank you for reading this and I hope you liked it!
-

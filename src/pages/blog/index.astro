@@ -30,8 +30,8 @@ const ogImage = new URL(og.src, Astro.site).toString();
           blogs.map((blog) => (
             <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between">
               <a
-                href={`/blog/${blog.slug}`}
-                transition:name={`/blog/${blog.slug}`}
+                href={`/blog/${blog.id}`}
+                transition:name={`/blog/${blog.id}`}
                 class="hover:text-primary focus:text-primary text-lg font-medium transition-colors outline-none"
               >
                 {blog.data.title}

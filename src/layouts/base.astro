@@ -1,5 +1,5 @@
 ---
-import { ViewTransitions } from "astro:transitions";
+import { ClientRouter } from "astro:transitions";
 import { SITE_TITLE } from "~/data";
 
 import "~/styles/global.css";
@@ -128,7 +128,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <meta name="apple-mobile-web-app-title" content="Website" />
     <meta name="apple-mobile-web-app-status-bar-style" content="default" />
 
-    <ViewTransitions />
+    <ClientRouter />
   </head>
   <body
     class="bg-background text-foreground selection:bg-primary antialiased selection:text-white/90"
