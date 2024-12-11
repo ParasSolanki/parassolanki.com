@@ -6,6 +6,7 @@ import { Icon } from "astro-icon/components";
 import { dateFormatter } from "~/utils/formatter";
 
 import "~/styles/doc.css";
+import { undefined } from "astro:schema";
 
 const { slug } = Astro.params;
 
@@ -30,6 +31,9 @@ const { Content, remarkPluginFrontmatter: frontmatter } = await render(blog);
 const readingTime = frontmatter.readingTime as number[];
 
 const publishedDate = dateFormatter.format(blog.data.pubDate);
+const updatedDate = blog.data.updatedDate
+  ? dateFormatter.format(blog.data.updatedDate)
+  : undefined;
 
 const readingTimeInMinutes = readingTime
   .map((t) => Math.ceil(t))
@@ -61,16 +65,32 @@ const ogImage = blog.data.ogImage?.src
         </h1>
         <div class="mt-6 flex flex-wrap justify-between">
           <div>
-            <p class="inline-flex items-center leading-normal">
-              <Icon
-                name="calendar"
-                aria-hidden
-                class="mr-2 size-4.5 flex-shrink-0"
-              />
-              <span
-                >Published on: <strong><time>{publishedDate}</time></strong>
-              </span>
-            </p>
+            <div>
+              <p class="inline-flex items-center leading-normal">
+                <Icon
+                  name="calendar"
+                  aria-hidden
+                  class="mr-2 size-4.5 flex-shrink-0"
+                />
+                <span>Published on: <time>{publishedDate}</time> </span>
+              </p>
+            </div>
+            {
+              updatedDate && (
+                <div class="mt-2">
+                  <p class="inline-flex items-center leading-normal">
+                    <Icon
+                      name="calendar"
+                      aria-hidden
+                      class="mr-2 size-4.5 flex-shrink-0"
+                    />
+                    <span>
+                      Updated on: <time>{updatedDate}</time>
+                    </span>
+                  </p>
+                </div>
+              )
+            }
           </div>
           <div>
             <p class="inline-flex items-center leading-normal">

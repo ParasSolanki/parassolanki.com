@@ -3,17 +3,27 @@ title: "Guide On Format, Lint And Typecheck Github Actions For Astro"
 description: "Guide on how to setting up format checking, linting, and type checking using Prettier, ESLint, pnpm and GitHub Actions for your Astro project."
 pubDate: "2024-11-30"
 ogImage: "../../assets/guide-on-format-lint-typecheck-gh-actions-for-astro-og.webp"
+updatedDate: "2024-12-11"
 ---
 
 If you have an [Astro](https://astro.build) project setup with [Prettier](https://prettier.io), [ESLint](https://eslint.org) and [Typescript](https://www.typescriptlang.org) and wanted to run a Github Action which checks for formatting, linting and typechecking, here's guide which will help you in setup.
+
+## What is Github Action?
+
+Github action are basically workflows which you can run in your repository. We can use existing workflows or create a custom one based on our project. Check out their docs for full guide [https://docs.github.com/en/actions](https://docs.github.com/en/actions)
+
 
 ## Getting Started
 
 In this guide we are using [pnpm](https://pnpm.io) as package manager. You can replace it with npm or yarn if you want.
 
-## What is Github Action?
+Also in your `package.json` add `packageManager` value to `pnpm` to let Github Action know that we are using pnpm as package manager.
 
-Github action are basically workflows which you can run in your repository. We can use existing workflows or create a custom one based on our project. Check out their docs for full guide [https://docs.github.com/en/actions](https://docs.github.com/en/actions)
+```json filename=package.json
+{
+  "packageManager": "pnpm@9.12.3", // Add your preferred version
+}
+```
 
 ## Setup Prettier
 
@@ -156,19 +166,9 @@ Create a `eslint.config.cjs` config file in root of your project and add the fol
 
 ```js filename=eslint.config.cjs
 import eslintPluginAstro from "eslint-plugin-astro";
-import tsParser from "@typescript-eslint/parser";
 
 export default [
   ...eslintPluginAstro.configs.recommended,
-  {
-    files: ["**/*.astro", "**/*.ts", "**/*.tsx"],
-    languageOptions: {
-      parser: tsParser,
-    },
-    rules: {
-      // Add more specific rules
-    },
-  },
 ];
 ```
 
