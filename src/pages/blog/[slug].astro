@@ -1,5 +1,5 @@
 ---
-import { getEntry, getCollection } from "astro:content";
+import { getEntry, getCollection, render } from "astro:content";
 import WithHeaderLayout from "~/layouts/with-header.astro";
 import { Icon } from "astro-icon/components";
 
@@ -15,7 +15,7 @@ export async function getStaticPaths() {
   const blogs = await getCollection("blog");
 
   return blogs.map((blog) => ({
-    params: { slug: blog.slug },
+    params: { slug: blog.id },
   }));
 }
 
@@ -25,7 +25,7 @@ if (!blog) {
   return notFound();
 }
 
-const { Content, remarkPluginFrontmatter: frontmatter } = await blog.render();
+const { Content, remarkPluginFrontmatter: frontmatter } = await render(blog);
 
 const readingTime = frontmatter.readingTime as number[];
 

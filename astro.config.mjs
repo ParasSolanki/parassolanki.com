@@ -26,7 +26,7 @@ import { transformPreserveCodeMeta } from "./scripts/shiki";
 export default defineConfig({
   site: "https://parassolanki.com",
   prefetch: true,
-  output: "hybrid",
+  output: "static",
   adapter: cloudflare(),
   vite: {
     plugins: [tailwindcss()],

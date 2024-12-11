@@ -2,10 +2,9 @@
 import { getCollection } from "astro:content";
 import { Icon } from "astro-icon/components";
 
+import WithHeaderLayout from "~/layouts/with-header.astro";
 import { projects, work, SITE_DESCRIPTION, SITE_TITLE } from "~/data";
 import { dateFormatter } from "~/utils/formatter";
-
-import WithHeaderLayout from "~/layouts/with-header.astro";
 
 const blogs = await getCollection("blog");
 
@@ -81,8 +80,8 @@ const [blog1, blog2] = blogs.sort(
           class="flex flex-col sm:flex-row sm:items-center sm:justify-between"
         >
           <a
-            href={`/blog/${blog1.slug}`}
-            transition:name={`/blog/${blog1.slug}`}
+            href={`/blog/${blog1.id}`}
+            transition:name={`/blog/${blog1.id}`}
             class="hover:text-primary focus:text-primary text-lg font-medium transition-colors outline-none"
           >
             {blog1.data.title}
@@ -96,8 +95,8 @@ const [blog1, blog2] = blogs.sort(
           blog2 && (
             <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between">
               <a
-                href={`/blog/${blog2.slug}`}
-                transition:name={`/blog/${blog2.slug}`}
+                href={`/blog/${blog2.id}`}
+                transition:name={`/blog/${blog2.id}`}
                 class="hover:text-primary focus:text-primary text-lg font-medium transition-colors outline-none"
               >
                 {blog2.data.title}
