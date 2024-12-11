@@ -63,10 +63,10 @@ export function rehypeCodeFilename() {
       return;
     }
 
-    const filename = node.properties?.dataFilename;
-    const codeValue = node.properties?.dataValue;
+    const filename = node.properties?.["data-filename"];
+    const codeValue = node.properties?.["data-value"];
 
-    node.properties.dataValue = undefined;
+    node.properties["data-value"] = undefined;
 
     const style = getStyles(node.properties.style);
 
