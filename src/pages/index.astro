@@ -6,6 +6,10 @@ import WithHeaderLayout from "~/layouts/with-header.astro";
 import { projects, work, SITE_DESCRIPTION, SITE_TITLE } from "~/data";
 import { dateFormatter } from "~/utils/formatter";
 
+import og from "~/assets/og-home.webp";
+
+const ogImage = new URL(og.src, Astro.site).toString();
+
 const blogs = await getCollection("blog");
 
 const [blog1, blog2] = blogs.sort(
@@ -14,7 +18,11 @@ const [blog1, blog2] = blogs.sort(
 );
 ---
 
-<WithHeaderLayout title={SITE_TITLE} description={SITE_DESCRIPTION}>
+<WithHeaderLayout
+  title={SITE_TITLE}
+  description={SITE_DESCRIPTION}
+  image={ogImage}
+>
   <main class="mx-auto max-w-4xl space-y-12 px-4 py-8">
     <section class="space-y-8">
       <h1 class="text-4xl font-black md:text-5xl">Paras Solanki</h1>
