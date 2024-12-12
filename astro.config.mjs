@@ -27,7 +27,13 @@ export default defineConfig({
   site: "https://parassolanki.com",
   prefetch: true,
   output: "static",
-  adapter: cloudflare(),
+  adapter: cloudflare({
+    routes: {
+      extend: {
+        exclude: ["/*.*", "/_astro/*", "/images/*"],
+      },
+    },
+  }),
   vite: {
     plugins: [tailwindcss()],
   },
