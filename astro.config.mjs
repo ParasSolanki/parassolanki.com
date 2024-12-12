@@ -30,6 +30,7 @@ export default defineConfig({
   adapter: cloudflare({
     routes: {
       extend: {
+        include: ["/*.*"],
         exclude: ["/*.*", "/_astro/*", "/images/*"],
       },
     },
