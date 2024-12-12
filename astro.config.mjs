@@ -5,7 +5,7 @@ import { defineConfig } from "astro/config";
 import icon from "astro-icon";
 import sitemap from "@astrojs/sitemap";
 import tailwindcss from "@tailwindcss/vite";
-import cloudflare from "@astrojs/cloudflare";
+import vercel from "@astrojs/vercel";
 
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypeExternalLinks from "rehype-external-links";
@@ -27,14 +27,7 @@ export default defineConfig({
   site: "https://parassolanki.com",
   prefetch: true,
   output: "static",
-  adapter: cloudflare({
-    routes: {
-      extend: {
-        include: ["/*"],
-        exclude: ["/", "/_astro/*", "/images/*"],
-      },
-    },
-  }),
+  adapter: vercel(),
   vite: {
     plugins: [tailwindcss()],
   },
