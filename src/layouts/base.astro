@@ -21,6 +21,16 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <meta name="generator" content={Astro.generator} />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content={title} />
+    <meta name="application-name" content={SITE_TITLE} />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="robots" content="index, follow" />
+    <meta name="googlebot" content="index, follow" />
+    <meta
+      name="keywords"
+      content="paras solanki, website, blog, projects, resume, portfolio"
+    />
 
     <link
       rel="preload"
@@ -123,10 +133,6 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
         </>
       )
     }
-
-    <meta name="mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-title" content="Website" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
 
     <ClientRouter />
   </head>
