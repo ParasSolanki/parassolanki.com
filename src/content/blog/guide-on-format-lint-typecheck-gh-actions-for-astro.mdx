@@ -12,7 +12,6 @@ If you have an [Astro](https://astro.build) project setup with [Prettier](https:
 
 Github action are basically workflows which you can run in your repository. We can use existing workflows or create a custom one based on our project. Check out their docs for full guide [https://docs.github.com/en/actions](https://docs.github.com/en/actions)
 
-
 ## Getting Started
 
 In this guide we are using [pnpm](https://pnpm.io) as package manager. You can replace it with npm or yarn if you want.
@@ -21,7 +20,7 @@ Also in your `package.json` add `packageManager` value to `pnpm` to let Github A
 
 ```json filename=package.json
 {
-  "packageManager": "pnpm@9.12.3", // Add your preferred version
+  "packageManager": "pnpm@9.12.3" // Add your preferred version
 }
 ```
 
@@ -167,9 +166,7 @@ Create a `eslint.config.cjs` config file in root of your project and add the fol
 ```js filename=eslint.config.cjs
 import eslintPluginAstro from "eslint-plugin-astro";
 
-export default [
-  ...eslintPluginAstro.configs.recommended,
-];
+export default [...eslintPluginAstro.configs.recommended];
 ```
 
 Modify the config based on your project requirements.
