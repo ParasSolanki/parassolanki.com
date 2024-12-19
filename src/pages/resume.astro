@@ -1,0 +1,301 @@
+---
+import { Icon } from "astro-icon/components";
+import BaseLayout from "~/layouts/base.astro";
+import og from "~/assets/resume-og.webp";
+
+const ogImage = new URL(og.src, Astro.site).toString();
+---
+
+<BaseLayout
+  title="Resume | Paras Solanki"
+  description="My Resume"
+  image={ogImage}
+>
+  <main class="mx-auto max-w-4xl space-y-6 p-4 print:p-0">
+    <a
+      href="/"
+      class="inline-flex items-center hover:underline hover:underline-offset-2 focus:underline focus:underline-offset-2"
+      ><Icon name="move-left" class="mr-1 size-4 print:size-3" aria-hidden /> Home</a
+    >
+    <header>
+      <div class="flex justify-between">
+        <div class="space-y-2 print:space-y-1">
+          <h1 class="text-3xl font-semibold print:text-2xl">
+            <span class="text-primary font-black">Paras</span> Solanki
+          </h1>
+          <p class="text-lg print:text-sm">Web Developer</p>
+          <div class="flex flex-wrap items-center gap-x-4 gap-y-2">
+            <a
+              href="https://www.parassolanki.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center text-sm hover:underline hover:underline-offset-2 focus:underline focus:underline-offset-2 print:text-xs"
+            >
+              <Icon name="globe" class="mr-1 size-4 print:size-3" aria-hidden />
+              parassolanki.com
+            </a>
+            <a
+              href="https://github.com/ParasSolanki"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center text-sm hover:underline hover:underline-offset-2 focus:underline focus:underline-offset-2 print:text-xs"
+            >
+              <Icon
+                name="github"
+                class="mr-1 size-4 print:size-3"
+                aria-hidden
+              /> ParasSolanki
+            </a>
+            <a
+              href="https://github.com/ParasSolanki"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center text-sm hover:underline hover:underline-offset-2 focus:underline focus:underline-offset-2 print:text-xs"
+            >
+              <Icon name="x" class="mr-1 size-4 print:size-3" aria-hidden /> _parasSolanki
+            </a>
+            <a
+              href="https://www.linkedin.com/in/paras-solanki-a5410b1b3"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center text-sm hover:underline hover:underline-offset-2 focus:underline focus:underline-offset-2 print:text-xs"
+            >
+              <Icon
+                name="linkedin"
+                class="mr-1 size-4 print:size-3"
+                aria-hidden
+              /> paras-solanki-a5410b1b3
+            </a>
+            <a
+              href="https://bsky.app/profile/parassolanki.bsky.social"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center text-sm hover:underline hover:underline-offset-2 focus:underline focus:underline-offset-2 print:text-xs"
+            >
+              <Icon
+                name="bluesky"
+                class="mr-1 size-4 print:size-3"
+                aria-hidden
+              /> parassolanki.bsky.social
+            </a>
+          </div>
+        </div>
+
+        <div class="space-y-1 text-end">
+          <p class="text-muted inline-flex items-center text-sm print:text-xs">
+            <Icon
+              name="map-pin"
+              class="mr-1 size-4 print:size-3"
+              aria-hidden
+            />Gujarat, India
+          </p>
+          <p>
+            <a
+              href="mailto:parassolanki151@gmail.com"
+              class="text-muted inline-flex items-center text-sm hover:underline hover:underline-offset-2 focus:underline focus:underline-offset-2 print:text-xs"
+            >
+              <Icon name="mail" class="mr-1 size-4 print:size-3" aria-hidden /> parassolanki151@gmail.com
+            </a>
+          </p>
+        </div>
+      </div>
+      <p class="text-muted mt-4 print:mt-2 print:text-sm">
+        I'm a developer with 3+ years of professional experience. Passionate
+        about building fun project, open-source and problem solving. I enjoy
+        coding. Always eager to learn about new things. Love playing cricket and
+        watching movies.
+      </p>
+    </header>
+
+    <div class="flex flex-col lg:flex-row lg:space-x-8">
+      <div class="w-full space-y-4 lg:w-7/12">
+        <section class="space-y-4">
+          <h3 class="text-xl font-bold print:text-sm">Work Experience</h3>
+
+          <div class="space-y-4">
+            <div class="space-y-1">
+              <h4 class="text-base font-medium">
+                Frontend Developer, ArkInfosoft
+              </h4>
+              <div class="flex items-center justify-between">
+                <p class="text-muted inline-flex items-center text-sm">
+                  <Icon name="calendar" class="mr-1 size-4" aria-hidden />Jan
+                  2022 - Present
+                </p>
+                <p class="text-muted text-sm"><em>Gujarat, India</em></p>
+              </div>
+              <p class="text-muted text-xs">
+                Vue, React/Next.js, Node.js, Javascript/Typescript
+              </p>
+
+              <ul class="text-muted mt-2 list-outside list-disc ps-4 text-sm">
+                <li>
+                  Maintaining large custom e-commerce application and its admin
+                  panel.
+                </li>
+                <li>
+                  Migrated Vue.js 2 web application to Vue.js 3 to new modern
+                  Vite based setup.
+                </li>
+              </ul>
+            </div>
+            <div class="space-y-1">
+              <h4 class="text-base font-medium">Junior Developer, Appgani</h4>
+              <div class="flex items-center justify-between">
+                <p class="text-muted inline-flex items-center text-sm">
+                  <Icon name="calendar" class="mr-1 size-4" aria-hidden />Jun
+                  2021 - Dec 2021
+                </p>
+                <p class="text-muted text-sm"><em>Gujarat, India</em></p>
+              </div>
+
+              <p class="text-muted text-xs">
+                Laravel, PHP, Vue, Javascript/Typescript
+              </p>
+              <ul class="text-muted mt-2 list-outside list-disc ps-4 text-sm">
+                <li>
+                  Contributed to large-scale admin application which manages
+                  users, its apps and subscriptions with Vue and Laravel.
+                </li>
+                <li>
+                  Developed REST API with Laravel for providing data between
+                  database and web application.
+                </li>
+                <li>
+                  Solved many issues on legacy wordpress site and implemented
+                  responsive design.
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+        <section class="space-y-4">
+          <h3 class="text-xl font-bold print:text-sm">Projects</h3>
+          <div class="space-y-1">
+            <div class="flex items-center justify-between">
+              <h4 class="text-base font-medium">Astro Master</h4>
+              <div>
+                <a
+                  href="https://github.com/ParasSolanki/astro-master"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  title="Github Repository"
+                  class="inline-flex items-center opacity-80 outline-none hover:opacity-100 focus:opacity-100"
+                >
+                  <Icon
+                    name="github"
+                    class="ml-0.5 size-4"
+                    aria-hidden="true"
+                  />
+                </a>
+                <a
+                  href="https://astro-master.vercel.app"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  title="Live URL"
+                  class="group inline-flex items-center opacity-80 outline-none hover:opacity-100 focus:opacity-100"
+                >
+                  <Icon name="link" class="ml-0.5 size-4" aria-hidden="true" />
+                </a>
+              </div>
+            </div>
+            <p class="text-muted text-sm">Next Master clone built with Astro</p>
+          </div>
+        </section>
+        <section class="space-y-4">
+          <h3 class="text-xl font-bold print:text-sm">Open Source</h3>
+          <div class="space-y-1">
+            <div class="flex items-center justify-between">
+              <h4 class="text-base font-medium">Bsky Profile</h4>
+              <div>
+                <a
+                  href="https://github.com/ParasSolanki/bsky-profile"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  title="Github Repository"
+                  class="inline-flex items-center opacity-80 outline-none hover:opacity-100 focus:opacity-100"
+                >
+                  <Icon
+                    name="github"
+                    class="ml-0.5 size-4"
+                    aria-hidden="true"
+                  />
+                </a>
+                <a
+                  href="https://parassolanki.github.io/bsky-profile/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  title="Live URL"
+                  class="group inline-flex items-center opacity-80 outline-none hover:opacity-100 focus:opacity-100"
+                >
+                  <Icon name="link" class="ml-0.5 size-4" aria-hidden="true" />
+                </a>
+              </div>
+            </div>
+            <p class="text-muted text-sm">
+              Bsky Profile is a custom web component that displays a user's
+              Bluesky profile.
+            </p>
+          </div>
+        </section>
+      </div>
+      <div class="w-full space-y-4 lg:w-5/12">
+        <section class="space-y-4">
+          <h3 class="text-xl font-bold print:text-sm">Education</h3>
+          <div class="space-y-1">
+            <h4 class="text-base font-medium">
+              Bachelor of Engineering in E.C.
+            </h4>
+            <p class="text-muted text-sm">Gujarat Technological University</p>
+
+            <div class="flex flex-wrap items-center justify-between">
+              <p class="text-muted inline-flex items-center text-xs">
+                <Icon name="calendar" class="mr-1 size-3" aria-hidden />Aug 2017
+                - July 2021
+              </p>
+              <p class="text-muted text-xs">8.81 GPA</p>
+            </div>
+          </div>
+        </section>
+        <section class="space-y-4">
+          <h3 class="text-lg font-bold">Technical Skills</h3>
+          <div class="text-muted flex flex-wrap gap-x-4 gap-y-2 text-sm">
+            <p class="inline-flex items-center">
+              <span class="inline-flex items-center">
+                <Icon name="javascript" class="mr-1 size-4" aria-hidden /> Javascript
+              </span>
+              <span class="mx-1">/</span>
+              <span class="inline-flex items-center"
+                ><Icon name="typescript" class="mr-1 size-4" aria-hidden /> Typescript</span
+              >
+            </p>
+            <p class="inline-flex items-center">
+              <Icon name="react" class="mr-1 size-4" aria-hidden /> React
+            </p>
+            <p class="inline-flex items-center">
+              <Icon name="vue" class="mr-1 size-4" aria-hidden /> Vue
+            </p>
+            <p class="inline-flex items-center">
+              <Icon name="node" class="mr-1 size-4" aria-hidden /> Node.js
+            </p>
+            <p class="inline-flex items-center">
+              <Icon name="mysql" class="mr-1 size-4" aria-hidden /> MySQL
+            </p>
+            <p class="inline-flex items-center">
+              <Icon name="sqlite" class="mr-1 size-6" aria-hidden /> Sqlite
+            </p>
+            <p class="inline-flex items-center">
+              <Icon name="mongodb" class="mr-1 size-4" aria-hidden /> MongoDB
+            </p>
+            <p class="inline-flex items-center">
+              <Icon name="html" class="mr-1 size-4" aria-hidden /> HTML
+            </p>
+            <p class="inline-flex items-center">
+              <Icon name="css" class="mr-1 size-4" aria-hidden /> CSS
+            </p>
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+</BaseLayout>
