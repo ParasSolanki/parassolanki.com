@@ -18,70 +18,17 @@ const ogImage = new URL(og.src, Astro.site).toString();
       ><Icon name="move-left" class="mr-1 size-4 print:size-3" aria-hidden /> Home</a
     >
     <header>
-      <div class="flex justify-between">
+      <div
+        class="flex flex-col justify-between space-y-2 sm:flex-row sm:space-y-0"
+      >
         <div class="space-y-2 print:space-y-1">
           <h1 class="text-3xl font-semibold print:text-2xl">
             <span class="text-primary font-black">Paras</span> Solanki
           </h1>
           <p class="text-lg print:text-sm">Web Developer</p>
-          <div class="flex flex-wrap items-center gap-x-4 gap-y-2">
-            <a
-              href="https://www.parassolanki.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="inline-flex items-center text-sm hover:underline hover:underline-offset-2 focus:underline focus:underline-offset-2 print:text-xs"
-            >
-              <Icon name="globe" class="mr-1 size-4 print:size-3" aria-hidden />
-              parassolanki.com
-            </a>
-            <a
-              href="https://github.com/ParasSolanki"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="inline-flex items-center text-sm hover:underline hover:underline-offset-2 focus:underline focus:underline-offset-2 print:text-xs"
-            >
-              <Icon
-                name="github"
-                class="mr-1 size-4 print:size-3"
-                aria-hidden
-              /> ParasSolanki
-            </a>
-            <a
-              href="https://github.com/ParasSolanki"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="inline-flex items-center text-sm hover:underline hover:underline-offset-2 focus:underline focus:underline-offset-2 print:text-xs"
-            >
-              <Icon name="x" class="mr-1 size-4 print:size-3" aria-hidden /> _parasSolanki
-            </a>
-            <a
-              href="https://www.linkedin.com/in/paras-solanki-a5410b1b3"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="inline-flex items-center text-sm hover:underline hover:underline-offset-2 focus:underline focus:underline-offset-2 print:text-xs"
-            >
-              <Icon
-                name="linkedin"
-                class="mr-1 size-4 print:size-3"
-                aria-hidden
-              /> paras-solanki-a5410b1b3
-            </a>
-            <a
-              href="https://bsky.app/profile/parassolanki.bsky.social"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="inline-flex items-center text-sm hover:underline hover:underline-offset-2 focus:underline focus:underline-offset-2 print:text-xs"
-            >
-              <Icon
-                name="bluesky"
-                class="mr-1 size-4 print:size-3"
-                aria-hidden
-              /> parassolanki.bsky.social
-            </a>
-          </div>
         </div>
 
-        <div class="space-y-1 text-end">
+        <div class="space-y-1 sm:text-end">
           <p class="text-muted inline-flex items-center text-sm print:text-xs">
             <Icon
               name="map-pin"
@@ -99,6 +46,49 @@ const ogImage = new URL(og.src, Astro.site).toString();
           </p>
         </div>
       </div>
+      <div class="mt-2 flex flex-wrap items-center gap-x-4 gap-y-2">
+        <a
+          href="https://www.parassolanki.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center text-sm hover:underline hover:underline-offset-2 focus:underline focus:underline-offset-2 print:text-xs"
+        >
+          <Icon name="globe" class="mr-1 size-4 print:size-3" aria-hidden />
+          parassolanki.com
+        </a>
+        <a
+          href="https://github.com/ParasSolanki"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center text-sm hover:underline hover:underline-offset-2 focus:underline focus:underline-offset-2 print:text-xs"
+        >
+          <Icon name="github" class="mr-1 size-4 print:size-3" aria-hidden /> ParasSolanki
+        </a>
+        <a
+          href="https://github.com/ParasSolanki"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center text-sm hover:underline hover:underline-offset-2 focus:underline focus:underline-offset-2 print:text-xs"
+        >
+          <Icon name="x" class="mr-1 size-3.5 print:size-3" aria-hidden /> _parasSolanki
+        </a>
+        <a
+          href="https://www.linkedin.com/in/paras-solanki-a5410b1b3"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center text-sm hover:underline hover:underline-offset-2 focus:underline focus:underline-offset-2 print:text-xs"
+        >
+          <Icon name="linkedin" class="mr-1 size-4 print:size-3" aria-hidden /> paras-solanki-a5410b1b3
+        </a>
+        <a
+          href="https://bsky.app/profile/parassolanki.bsky.social"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center text-sm hover:underline hover:underline-offset-2 focus:underline focus:underline-offset-2 print:text-xs"
+        >
+          <Icon name="bluesky" class="mr-1 size-4 print:size-3" aria-hidden /> parassolanki.bsky.social
+        </a>
+      </div>
       <p class="text-muted mt-4 print:mt-2 print:text-sm">
         I'm a developer with 3+ years of professional experience. Passionate
         about building fun project, open-source and problem solving. I enjoy
@@ -110,7 +100,9 @@ const ogImage = new URL(og.src, Astro.site).toString();
     <div class="flex flex-col lg:flex-row lg:space-x-8">
       <div class="w-full space-y-4 lg:w-7/12">
         <section class="space-y-4">
-          <h3 class="text-xl font-bold print:text-sm">Work Experience</h3>
+          <h3 class="text-primary text-xl font-bold print:text-sm">
+            Work Experience
+          </h3>
 
           <div class="space-y-4">
             <div class="space-y-1">
@@ -170,7 +162,7 @@ const ogImage = new URL(og.src, Astro.site).toString();
           </div>
         </section>
         <section class="space-y-4">
-          <h3 class="text-xl font-bold print:text-sm">Projects</h3>
+          <h3 class="text-primary text-xl font-bold print:text-sm">Projects</h3>
           <div class="space-y-1">
             <div class="flex items-center justify-between">
               <h4 class="text-base font-medium">Astro Master</h4>
@@ -203,7 +195,9 @@ const ogImage = new URL(og.src, Astro.site).toString();
           </div>
         </section>
         <section class="space-y-4">
-          <h3 class="text-xl font-bold print:text-sm">Open Source</h3>
+          <h3 class="text-primary text-xl font-bold print:text-sm">
+            Open Source
+          </h3>
           <div class="space-y-1">
             <div class="flex items-center justify-between">
               <h4 class="text-base font-medium">Bsky Profile</h4>
@@ -241,7 +235,9 @@ const ogImage = new URL(og.src, Astro.site).toString();
       </div>
       <div class="w-full space-y-4 lg:w-5/12">
         <section class="space-y-4">
-          <h3 class="text-xl font-bold print:text-sm">Education</h3>
+          <h3 class="text-primary text-xl font-bold print:text-sm">
+            Education
+          </h3>
           <div class="space-y-1">
             <h4 class="text-base font-medium">
               Bachelor of Engineering in E.C.
@@ -258,7 +254,9 @@ const ogImage = new URL(og.src, Astro.site).toString();
           </div>
         </section>
         <section class="space-y-4">
-          <h3 class="text-lg font-bold">Technical Skills</h3>
+          <h3 class="text-primary text-xl font-bold print:text-sm">
+            Technical Skills
+          </h3>
           <div class="text-muted flex flex-wrap gap-x-4 gap-y-2 text-sm">
             <p class="inline-flex items-center">
               <span class="inline-flex items-center">
@@ -286,6 +284,9 @@ const ogImage = new URL(og.src, Astro.site).toString();
             </p>
             <p class="inline-flex items-center">
               <Icon name="mongodb" class="mr-1 size-4" aria-hidden /> MongoDB
+            </p>
+            <p class="inline-flex items-center">
+              <Icon name="docker" class="mr-1 size-4" aria-hidden /> Docker
             </p>
             <p class="inline-flex items-center">
               <Icon name="html" class="mr-1 size-4" aria-hidden /> HTML
