@@ -11,7 +11,7 @@ const ogImage = new URL(og.src, Astro.site).toString();
   description="My Resume"
   image={ogImage}
 >
-  <main class="mx-auto max-w-4xl space-y-6 p-4 print:p-0">
+  <main class="mx-auto max-w-4xl space-y-6 p-4 print:space-y-4 print:p-0">
     <a
       href="/"
       class="inline-flex items-center hover:underline hover:underline-offset-2 focus:underline focus:underline-offset-2 print:hidden"
@@ -68,15 +68,19 @@ const ogImage = new URL(og.src, Astro.site).toString();
           href="https://github.com/ParasSolanki"
           target="_blank"
           rel="noopener noreferrer"
-          class="inline-flex items-center text-sm hover:underline hover:underline-offset-2 focus:underline focus:underline-offset-2 print:text-xs"
+          class="inline-flex items-center text-sm hover:underline hover:underline-offset-2 focus:underline focus:underline-offset-2 print:hidden print:text-xs"
         >
-          <Icon name="x" class="mr-1 size-3.5 print:size-3" aria-hidden /> _parasSolanki
+          <Icon
+            name="x"
+            class="mr-1 size-3.5 print:hidden print:size-3"
+            aria-hidden
+          /> _parasSolanki
         </a>
         <a
           href="https://www.linkedin.com/in/paras-solanki-a5410b1b3"
           target="_blank"
           rel="noopener noreferrer"
-          class="inline-flex items-center text-sm hover:underline hover:underline-offset-2 focus:underline focus:underline-offset-2 print:text-xs"
+          class="inline-flex items-center text-sm hover:underline hover:underline-offset-2 focus:underline focus:underline-offset-2 print:hidden print:text-xs"
         >
           <Icon name="linkedin" class="mr-1 size-4 print:size-3" aria-hidden /> paras-solanki-a5410b1b3
         </a>
@@ -84,7 +88,7 @@ const ogImage = new URL(og.src, Astro.site).toString();
           href="https://bsky.app/profile/parassolanki.bsky.social"
           target="_blank"
           rel="noopener noreferrer"
-          class="inline-flex items-center text-sm hover:underline hover:underline-offset-2 focus:underline focus:underline-offset-2 print:text-xs"
+          class="inline-flex items-center text-sm hover:underline hover:underline-offset-2 focus:underline focus:underline-offset-2 print:hidden print:text-xs"
         >
           <Icon name="bluesky" class="mr-1 size-4 print:size-3" aria-hidden /> parassolanki.bsky.social
         </a>
@@ -99,12 +103,12 @@ const ogImage = new URL(og.src, Astro.site).toString();
 
     <div class="flex flex-col lg:flex-row lg:space-x-8">
       <div class="w-full space-y-4 lg:w-7/12">
-        <section class="space-y-4">
+        <section class="space-y-4 print:space-y-2">
           <h3 class="text-primary text-xl font-bold print:text-sm">
             Work Experience
           </h3>
 
-          <div class="space-y-4">
+          <div class="space-y-4 print:space-y-2">
             <div class="space-y-1">
               <h4 class="text-base font-medium">
                 Frontend Developer, ArkInfosoft
@@ -126,7 +130,15 @@ const ogImage = new URL(og.src, Astro.site).toString();
                   panel.
                 </li>
                 <li>
-                  Migrated Vue.js 2 web application to Vue.js 3 to new modern
+                  Building APIs for various features and integrating them with
+                  frontend applications.
+                </li>
+                <li>
+                  Converting Figma design to responsive, reusable React/Vue
+                  components.
+                </li>
+                <li>
+                  Migrated legacy Vue 2 web application to Vue 3 to new modern
                   Vite based setup.
                 </li>
               </ul>
@@ -154,14 +166,14 @@ const ogImage = new URL(og.src, Astro.site).toString();
                   database and web application.
                 </li>
                 <li>
-                  Solved many issues on legacy wordpress site and implemented
-                  responsive design.
+                  Solved custom theme and custom plugin related issues on legacy
+                  wordpress site and implemented responsive design.
                 </li>
               </ul>
             </div>
           </div>
         </section>
-        <section class="space-y-4">
+        <section class="space-y-4 print:space-y-2">
           <h3 class="text-primary text-xl font-bold print:text-sm">Projects</h3>
           <div class="space-y-1">
             <div class="flex items-center justify-between">
@@ -194,7 +206,7 @@ const ogImage = new URL(og.src, Astro.site).toString();
             <p class="text-muted text-sm">Next Master clone built with Astro</p>
           </div>
         </section>
-        <section class="space-y-4">
+        <section class="space-y-4 print:space-y-2">
           <h3 class="text-primary text-xl font-bold print:text-sm">
             Open Source
           </h3>
@@ -233,8 +245,8 @@ const ogImage = new URL(og.src, Astro.site).toString();
           </div>
         </section>
       </div>
-      <div class="w-full space-y-4 lg:w-5/12">
-        <section class="space-y-4">
+      <div class="w-full space-y-4 lg:w-5/12 print:mt-4">
+        <section class="space-y-4 print:space-y-2">
           <h3 class="text-primary text-xl font-bold print:text-sm">
             Education
           </h3>
@@ -253,7 +265,7 @@ const ogImage = new URL(og.src, Astro.site).toString();
             </div>
           </div>
         </section>
-        <section class="space-y-4">
+        <section class="space-y-4 print:space-y-2">
           <h3 class="text-primary text-xl font-bold print:text-sm">
             Technical Skills
           </h3>
