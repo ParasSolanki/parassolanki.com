@@ -18,11 +18,11 @@
   },
   "dependencies": {
     "@astrojs/check": "^0.9.4",
-    "@astrojs/mdx": "^4.0.6",
+    "@astrojs/mdx": "^4.0.7",
     "@astrojs/rss": "^4.0.11",
     "@astrojs/sitemap": "^3.2.1",
-    "@astrojs/vercel": "^8.0.2",
-    "astro": "^5.1.7",
+    "@astrojs/vercel": "^8.0.4",
+    "astro": "^5.1.8",
     "astro-icon": "^1.1.5",
     "sharp": "^0.33.5"
   },
