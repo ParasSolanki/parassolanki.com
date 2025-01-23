@@ -27,8 +27,8 @@
     "sharp": "^0.33.5"
   },
   "devDependencies": {
-    "@shikijs/colorized-brackets": "^1.27.2",
-    "@shikijs/transformers": "^1.27.2",
+    "@shikijs/colorized-brackets": "^2.1.0",
+    "@shikijs/transformers": "^2.1.0",
     "@tailwindcss/typography": "0.5.0-alpha.3",
     "@tailwindcss/vite": "4.0.0",
     "@typescript-eslint/parser": "^8.14.0",
