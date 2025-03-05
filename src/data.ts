@@ -24,6 +24,13 @@ export const work = [
 
 export const projects = [
   {
+    name: "Github MCP Server",
+    tag: "",
+    repo: "https://github.com/ParasSolanki/github-mcp-server",
+    description: "A model context protocol server for GitHub API.",
+    techonologies: ["modelcontextprotocol", "Typescript"],
+  },
+  {
     name: "Bsky Profile",
     tag: "Creator and Maitainor",
     url: "https://parassolanki.github.io/bsky-profile",
