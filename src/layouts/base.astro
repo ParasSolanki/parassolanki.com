@@ -14,6 +14,7 @@ const { title, description, image } = Astro.props;
 
 const site = Astro.site;
 const url = Astro.url;
+const domain = new URL(url.toString()).hostname;
 
 const canonicalURL = new URL(url.pathname, site);
 ---
@@ -123,7 +124,7 @@ const canonicalURL = new URL(url.pathname, site);
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
 
-    <meta property="twitter:domain" content={site} />
+    <meta property="twitter:domain" content={domain} />
     <meta property="twitter:card" content="summary_large_image" />
     <meta property="twitter:url" content={url} />
     <meta property="twitter:title" content={title} />
