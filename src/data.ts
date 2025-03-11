@@ -24,6 +24,14 @@ export const work = [
 
 export const projects = [
   {
+    name: "Jira MCP Server",
+    tag: "Creator and Maitainor",
+    repo: "https://github.com/ParasSolanki/jira-mcp-server",
+    url: "https://github.com/ParasSolanki/jira-mcp-server?tab=readme-ov-file#jira-mcp-server",
+    description: "A model context protocol server for Jira API.",
+    techonologies: ["modelcontextprotocol", "Typescript", "Docker"],
+  },
+  {
     name: "Github MCP Server",
     tag: "",
     repo: "https://github.com/ParasSolanki/github-mcp-server",
