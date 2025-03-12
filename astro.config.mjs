@@ -31,6 +31,12 @@ export default defineConfig({
   vite: {
     plugins: [tailwindcss()],
   },
+  experimental: {
+    responsiveImages: true,
+  },
+  image: {
+    experimentalLayout: "responsive",
+  },
   integrations: [
     icon({ iconDir: "./src/icons" }),
     mdx({
